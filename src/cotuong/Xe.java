@@ -16,10 +16,15 @@ public class Xe extends QuanCo {
 		// Di chuyển theo hàng
 		for (int i = hang + 1; i < 10; i++) { // Xuống dưới
 			if (banCo.viTriTrong(i, cot)) {
-				nuocDi.add(new int[] { i, cot });
+				// Thêm kiểm tra seBiChieuSauKhiDiChuyen
+				if (!banCo.seBiChieuSauKhiDiChuyen(this, i, cot)) {
+					nuocDi.add(new int[] { i, cot });
+				}
 			} else {
 				if (banCo.coQuanDoiThu(i, cot, laMauTrang)) {
-					nuocDi.add(new int[] { i, cot });
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, i, cot)) {
+						nuocDi.add(new int[] { i, cot });
+					}
 				}
 				break; // Dừng lại khi gặp quân cờ
 			}
@@ -27,10 +32,14 @@ public class Xe extends QuanCo {
 
 		for (int i = hang - 1; i >= 0; i--) { // Lên trên
 			if (banCo.viTriTrong(i, cot)) {
-				nuocDi.add(new int[] { i, cot });
+				if (!banCo.seBiChieuSauKhiDiChuyen(this, i, cot)) {
+					nuocDi.add(new int[] { i, cot });
+				}
 			} else {
 				if (banCo.coQuanDoiThu(i, cot, laMauTrang)) {
-					nuocDi.add(new int[] { i, cot });
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, i, cot)) {
+						nuocDi.add(new int[] { i, cot });
+					}
 				}
 				break; // Dừng lại khi gặp quân cờ
 			}
@@ -39,10 +48,14 @@ public class Xe extends QuanCo {
 		// Di chuyển theo cột
 		for (int j = cot + 1; j < 9; j++) { // Sang phải
 			if (banCo.viTriTrong(hang, j)) {
-				nuocDi.add(new int[] { hang, j });
+				if (!banCo.seBiChieuSauKhiDiChuyen(this, hang, j)) {
+					nuocDi.add(new int[] { hang, j });
+				}
 			} else {
 				if (banCo.coQuanDoiThu(hang, j, laMauTrang)) {
-					nuocDi.add(new int[] { hang, j });
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, hang, j)) {
+						nuocDi.add(new int[] { hang, j });
+					}
 				}
 				break; // Dừng lại khi gặp quân cờ
 			}
@@ -50,10 +63,14 @@ public class Xe extends QuanCo {
 
 		for (int j = cot - 1; j >= 0; j--) { // Sang trái
 			if (banCo.viTriTrong(hang, j)) {
-				nuocDi.add(new int[] { hang, j });
+				if (!banCo.seBiChieuSauKhiDiChuyen(this, hang, j)) {
+					nuocDi.add(new int[] { hang, j });
+				}
 			} else {
 				if (banCo.coQuanDoiThu(hang, j, laMauTrang)) {
-					nuocDi.add(new int[] { hang, j });
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, hang, j)) {
+						nuocDi.add(new int[] { hang, j });
+					}
 				}
 				break; // Dừng lại khi gặp quân cờ
 			}

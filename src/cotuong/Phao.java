@@ -26,10 +26,16 @@ public class Phao extends QuanCo {
 
 				if (banCo.viTriTrong(hangMoi, cotMoi)) {
 					if (!nhayQua)
-						nuocDi.add(new int[] { hangMoi, cotMoi });
+						// Thêm kiểm tra seBiChieuSauKhiDiChuyen
+						if (!banCo.seBiChieuSauKhiDiChuyen(this, hangMoi, cotMoi)) {
+							nuocDi.add(new int[] { hangMoi, cotMoi });
+						}
 				} else {
 					if (nhayQua && banCo.coQuanDoiThu(hangMoi, cotMoi, laMauTrang)) {
-						nuocDi.add(new int[] { hangMoi, cotMoi });
+						// Thêm kiểm tra seBiChieuSauKhiDiChuyen
+						if (!banCo.seBiChieuSauKhiDiChuyen(this, hangMoi, cotMoi)) {
+							nuocDi.add(new int[] { hangMoi, cotMoi });
+						}
 						break;
 					}
 					nhayQua = true;

@@ -99,97 +99,94 @@ public class BanCo {
 
 	public void inBanCo() {
 		System.out.println("Trạng thái bàn cờ hiện tại:");
+
+		// In số cột
+		System.out.print("    ");
+		for (int j = 0; j < 9; j++) {
+			System.out.printf("  %2d   ", j);
+		}
+		System.out.println();
+
+		// In hàng và các quân cờ
 		for (int i = 0; i < 10; i++) {
+			// In đường kẻ ngang
+			System.out.print("   ");
 			for (int j = 0; j < 9; j++) {
+				System.out.print("-------");
+			}
+			System.out.println("-");
+
+			// In chỉ số hàng và các quân cờ
+			System.out.printf("%2d |", i);
+			for (int j = 0; j < 9; j++) {
+				String kyTuTrungQuoc = "      "; // Khoảng trống mặc định cho ô trống
+
 				if (viTri[i][j] != null) {
 					String tenQuanCo = viTri[i][j].getTen();
-					String kyTuTrungQuoc;
 
-					// Phân biệt giữa quân trắng và quân đen
 					if (viTri[i][j].laMauTrang()) {
 						switch (tenQuanCo) {
-						case "QuanTuong": // Tướng trắng
-							kyTuTrungQuoc = "帥";
-							break;
-						case "Si": // Sĩ trắng
-							kyTuTrungQuoc = "仕";
-							break;
-						case "Tuong": // Tượng trắng
-							kyTuTrungQuoc = "相";
-							break;
-						case "Ma": // Mã trắng
-							kyTuTrungQuoc = "傌";
-							break;
-						case "Xe": // Xe trắng
-							kyTuTrungQuoc = "俥  ";
-							break;
-						case "Phao": // Pháo trắng
-							kyTuTrungQuoc = "炮 ";
-							break;
-						case "Tot": // Tốt trắng
-							kyTuTrungQuoc = "兵 ";
-							break;
-						default:
-							kyTuTrungQuoc = ". ";
-							break;
+							case "QuanTuong":
+								kyTuTrungQuoc = "  帥  ";
+								break;
+							case "Si":
+								kyTuTrungQuoc = "  仕  ";
+								break;
+							case "Tuong":
+								kyTuTrungQuoc = "  相  ";
+								break;
+							case "Ma":
+								kyTuTrungQuoc = "  傌  ";
+								break;
+							case "Xe":
+								kyTuTrungQuoc = "  俥  ";
+								break;
+							case "Phao":
+								kyTuTrungQuoc = "  炮  ";
+								break;
+							case "Tot":
+								kyTuTrungQuoc = "  兵  ";
+								break;
 						}
 					} else {
 						switch (tenQuanCo) {
-						case "QuanTuong": // Tướng đen
-							kyTuTrungQuoc = "將";
-							break;
-						case "Si": // Sĩ đen
-							kyTuTrungQuoc = "士";
-							break;
-						case "Tuong": // Tượng đen
-							kyTuTrungQuoc = "象";
-							break;
-						case "Ma": // Mã đen
-							kyTuTrungQuoc = "馬";
-							break;
-						case "Xe": // Xe đen
-							kyTuTrungQuoc = "車  ";
-							break;
-						case "Phao": // Pháo đen
-							kyTuTrungQuoc = "砲 ";
-							break;
-						case "Tot": // Tốt đen
-							kyTuTrungQuoc = "卒 ";
-							break;
-						default:
-							kyTuTrungQuoc = ".";
-							break;
+							case "QuanTuong":
+								kyTuTrungQuoc = "  將  ";
+								break;
+							case "Si":
+								kyTuTrungQuoc = "  士  ";
+								break;
+							case "Tuong":
+								kyTuTrungQuoc = "  象  ";
+								break;
+							case "Ma":
+								kyTuTrungQuoc = "  馬  ";
+								break;
+							case "Xe":
+								kyTuTrungQuoc = "  車  ";
+								break;
+							case "Phao":
+								kyTuTrungQuoc = "  砲  ";
+								break;
+							case "Tot":
+								kyTuTrungQuoc = "  卒  ";
+								break;
 						}
 					}
-					// Tướng (King): Tướng hoặc Soái, thường được ký hiệu là 帥 (Soái) hoặc 將
-					// (Tướng), tùy theo phe Đỏ hoặc Đen.
-
-					// Sĩ (Guard/Advisor): Sĩ, thường ký hiệu là 仕 (Sĩ) cho Đỏ và 士 (Sĩ) cho Đen. Sĩ
-					// chỉ di chuyển trong cung và bảo vệ Tướng.
-
-					// Tượng (Elephant/Bishop): Tượng, ký hiệu là 相 (Tướng) cho Đỏ và 象 (Tượng) cho
-					// Đen. Tượng di chuyển theo đường chéo và không được qua sông.
-
-					// Mã (Horse/Knight): Mã, ký hiệu là 傌 (Mã) cho Đỏ và 馬 (Mã) cho Đen, có thể di
-					// chuyển hình chữ "L" như trong cờ vua.
-
-					// Xe (Rook/Chariot): Xe, ký hiệu là 俥 (Xe) cho Đỏ và 車 (Xe) cho Đen, di chuyển
-					// ngang dọc theo các hàng cột.
-
-					// Pháo (Cannon): Pháo, ký hiệu là 炮 (Pháo) cho Đỏ và 砲 (Pháo) cho Đen, có thể
-					// nhảy qua một quân khi ăn.
-
-					// Tốt (Pawn/Soldier): Tốt, ký hiệu là 兵 (Binh) cho Đỏ và 卒 (Tốt) cho Đen, di
-					// chuyển từng bước và không lùi sau khi qua sông.
-
-					System.out.printf("%-2s", kyTuTrungQuoc); // Căn trái với độ rộng 3 ký tự
-				} else {
-					System.out.printf("%-3s", "."); // Căn trái dấu chấm
 				}
+
+				// In quân cờ với khoảng trống đều hai bên
+				System.out.print(kyTuTrungQuoc + "|");
 			}
-			System.out.println(); // Xuống dòng sau mỗi hàng
+			System.out.println();
 		}
-		System.out.println();
+
+		// In đường kẻ ngang cuối cùng
+		System.out.print("   ");
+		for (int j = 0; j < 9; j++) {
+			System.out.print("-------");
+		}
+		System.out.println("-");
 	}
 
 	public void inLichSuNuocDi() {
@@ -226,6 +223,56 @@ public class BanCo {
 
 		// Nếu cả hai Tướng đều còn, không có bên nào thắng
 		return null;
+	}
+
+	// Trong BanCo.java
+	public boolean kiemTraChieuBi(boolean laMauTrang) {
+		QuanTuong tuong = timQuanTuong(laMauTrang);
+		if (tuong == null) {
+			return false;
+		}
+
+		List<int[]> nuocDiHopLe = tuong.layNuocDiHopLe(this);
+		if (nuocDiHopLe.isEmpty()) {
+			return true; // Không có nước đi nào để thoát chiếu, tức là chiếu bí
+		}
+
+		return false;
+	}
+
+	// Hàm tìm tướng
+	public QuanTuong timQuanTuong(boolean laMauTrang) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 9; j++) {
+				QuanCo quanCo = viTri[i][j];
+				if (quanCo instanceof QuanTuong && quanCo.laMauTrang() == laMauTrang) {
+					return (QuanTuong) quanCo;
+				}
+			}
+		}
+		return null;
+	}
+
+	public boolean seBiChieuSauKhiDiChuyen(QuanCo quanCo, int hangMoi, int cotMoi) {
+		// Lưu vị trí và trạng thái ban đầu
+		int hangCu = quanCo.hang;
+		int cotCu = quanCo.cot;
+		QuanCo quanCoDich = viTri[hangMoi][cotMoi];
+
+		// Thực hiện giả lập nước đi
+		viTri[hangMoi][cotMoi] = quanCo;
+		viTri[hangCu][cotCu] = null;
+		quanCo.capNhatViTri(hangMoi, cotMoi);
+
+		// Kiểm tra nếu tướng bị chiếu
+		boolean biChieu = kiemTraChieuBi(quanCo.laMauTrang());
+
+		// Hoàn tác nước đi
+		viTri[hangCu][cotCu] = quanCo;
+		viTri[hangMoi][cotMoi] = quanCoDich;
+		quanCo.capNhatViTri(hangCu, cotCu);
+
+		return biChieu;
 	}
 
 }

@@ -22,7 +22,10 @@ public class Si extends QuanCo {
 			if (banCo.viTriHopLe(hangMoi, cotMoi) && hangMoi >= hangMin && hangMoi <= hangMax && cotMoi >= 3
 					&& cotMoi <= 5) {
 				if (banCo.viTriTrong(hangMoi, cotMoi) || banCo.coQuanDoiThu(hangMoi, cotMoi, laMauTrang)) {
-					nuocDi.add(new int[] { hangMoi, cotMoi });
+					// Thêm kiểm tra seBiChieuSauKhiDiChuyen
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, hangMoi, cotMoi)) {
+						nuocDi.add(new int[] { hangMoi, cotMoi });
+					}
 				}
 			}
 		}

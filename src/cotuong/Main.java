@@ -66,9 +66,17 @@ public class Main {
 			banCo.inLichSuNuocDi();
 			// Kiểm tra tình trạng của ván cờ (chiếu bí)
 			// Thêm logic kiểm tra chiếu bí ở đây nếu cần
-
 			// Kiểm tra kết thúc trò chơi
-			// Nếu một bên bị chiếu bí, gán troChoiKetThuc = true
+			String ketQua = banCo.kiemTraThangCuoc();
+			if (ketQua != null) {
+				System.out.println(ketQua);
+				troChoiKetThuc = true;
+			}
+			// Sau mỗi lượt đi của người chơi
+			if (banCo.kiemTraChieuBi(!laLuotTrang)) { // Kiểm tra nếu đối thủ bị chiếu bí
+				System.out.println("Chiếu bí! " + (laLuotTrang ? "Trắng" : "Đen") + " thắng!");
+				troChoiKetThuc = true;
+			}
 
 		}
 		scanner.close();
