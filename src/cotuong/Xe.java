@@ -9,6 +9,10 @@ public class Xe extends QuanCo {
 		super(hang, cot, laMauTrang);
 	}
 
+	public String getKyTuTrungQuoc() {
+		return laMauTrang ? "俥" : "車"; // Xe trắng và Xe đen
+	}
+
 	@Override
 	public List<int[]> layNuocDiHopLe(BanCo banCo) {
 		List<int[]> nuocDi = new ArrayList<>();
@@ -58,6 +62,8 @@ public class Xe extends QuanCo {
 				break; // Dừng lại khi gặp quân cờ
 			}
 		}
+		// Kiểm tra các nước đi hợp lệ, loại bỏ các nước đi làm Tướng bị chiếu
+		loaiBoNuocDiGayChieu(nuocDi, banCo);
 
 		return nuocDi;
 	}

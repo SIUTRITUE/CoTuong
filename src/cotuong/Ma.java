@@ -9,6 +9,10 @@ public class Ma extends QuanCo {
 		super(hang, cot, laMauTrang);
 	}
 
+	public String getKyTuTrungQuoc() {
+		return laMauTrang ? "傌" : "馬"; // Mã trắng và Mã đen
+	}
+
 	@Override
 	public List<int[]> layNuocDiHopLe(BanCo banCo) {
 		List<int[]> nuocDi = new ArrayList<>();
@@ -25,6 +29,7 @@ public class Ma extends QuanCo {
 				}
 			}
 		}
+		loaiBoNuocDiGayChieu(nuocDi, banCo);
 
 		return nuocDi;
 	}

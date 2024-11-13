@@ -1,5 +1,6 @@
 package cotuong;
 
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class QuanCo {
@@ -35,4 +36,21 @@ public abstract class QuanCo {
 	public String getTen() {
 		return this.getClass().getSimpleName();
 	}
+
+	protected abstract String getKyTuTrungQuoc();
+
+	public void loaiBoNuocDiGayChieu(List<int[]> nuocDi, BanCo banCo) {
+		Iterator<int[]> iterator = nuocDi.iterator();
+		while (iterator.hasNext()) {
+			int[] nuoc = iterator.next();
+			int hangMoi = nuoc[0];
+			int cotMoi = nuoc[1];
+
+			// Kiểm tra nước đi có hợp lệ mà không gây chiếu
+			if (!banCo.diChuyenTamThoi(this, hangMoi, cotMoi)) {
+				iterator.remove(); // Xóa nước đi nếu làm tướng bị chiếu
+			}
+		}
+	}
+
 }

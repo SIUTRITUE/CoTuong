@@ -64,12 +64,20 @@ public class Main {
 			}
 
 			banCo.inLichSuNuocDi();
-			// Kiểm tra tình trạng của ván cờ (chiếu bí)
-			// Thêm logic kiểm tra chiếu bí ở đây nếu cần
 
 			// Kiểm tra kết thúc trò chơi
-			// Nếu một bên bị chiếu bí, gán troChoiKetThuc = true
-
+			String ketQua = banCo.kiemTraThangCuoc();
+			if (!ketQua.equals("Chưa kết thúc!")) {
+				ketQua = laLuotTrang ? "Đen thắng!" : "Trắng thắng!";
+				System.out.println("Trò Chơi Kết Thúc " + ketQua);
+				troChoiKetThuc = true;
+			}
+			// Kiểm tra chiếu bí sau khi di chuyển
+			if (banCo.kiemTraChieuBi(!laLuotTrang)) {
+				ketQua = laLuotTrang ? "Đen thắng!" : "Trắng thắng!";
+				System.out.println("Trò Chơi Kết Thúc " + ketQua);
+				troChoiKetThuc = true;
+			}
 		}
 		scanner.close();
 	}
