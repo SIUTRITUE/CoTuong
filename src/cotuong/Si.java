@@ -9,6 +9,10 @@ public class Si extends QuanCo {
 		super(hang, cot, laMauTrang);
 	}
 
+	public String getKyTuTrungQuoc() {
+		return laMauTrang ? "仕" : "士"; // Sĩ trắng và Sĩ đen
+	}
+
 	@Override
 	public List<int[]> layNuocDiHopLe(BanCo banCo) {
 		List<int[]> nuocDi = new ArrayList<>();
@@ -29,7 +33,9 @@ public class Si extends QuanCo {
 				}
 			}
 		}
-
+		// Kiểm tra các nước đi hợp lệ, loại bỏ các nước đi làm Tướng bị chiếu
+		loaiBoNuocDiGayChieu(nuocDi, banCo);
 		return nuocDi;
 	}
+
 }

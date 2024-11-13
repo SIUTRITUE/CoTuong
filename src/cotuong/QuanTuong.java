@@ -10,6 +10,11 @@ public class QuanTuong extends QuanCo {
 	}
 
 	@Override
+	public String getKyTuTrungQuoc() {
+		return laMauTrang ? "帥" : "將"; // Tướng trắng (帥) và Tướng đen (將)
+	}
+
+	@Override
 	public List<int[]> layNuocDiHopLe(BanCo banCo) {
 		List<int[]> nuocDi = new ArrayList<>();
 		int[][] huongDi = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
@@ -29,6 +34,7 @@ public class QuanTuong extends QuanCo {
 				}
 			}
 		}
+
 		return nuocDi;
 	}
 

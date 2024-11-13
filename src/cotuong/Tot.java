@@ -9,6 +9,10 @@ public class Tot extends QuanCo {
 		super(hang, cot, laMauTrang);
 	}
 
+	public String getKyTuTrungQuoc() {
+		return laMauTrang ? "兵" : "卒"; // Tốt trắng và Tốt đen
+	}
+
 	@Override
 	public List<int[]> layNuocDiHopLe(BanCo banCo) {
 		List<int[]> nuocDi = new ArrayList<>();
@@ -36,6 +40,8 @@ public class Tot extends QuanCo {
 				}
 			}
 		}
+		// Kiểm tra các nước đi hợp lệ, loại bỏ các nước đi làm Tướng bị chiếu
+		loaiBoNuocDiGayChieu(nuocDi, banCo);
 
 		return nuocDi;
 	}

@@ -9,6 +9,10 @@ public class Phao extends QuanCo {
 		super(hang, cot, laMauTrang);
 	}
 
+	public String getKyTuTrungQuoc() {
+		return laMauTrang ? "炮" : "砲"; // Pháo trắng và Pháo đen
+	}
+
 	@Override
 	public List<int[]> layNuocDiHopLe(BanCo banCo) {
 		List<int[]> nuocDi = new ArrayList<>();
@@ -38,11 +42,15 @@ public class Phao extends QuanCo {
 						}
 						break;
 					}
+					if (nhayQua && !banCo.coQuanDoiThu(hangMoi, cotMoi, laMauTrang)) {
+						break;
+					}
 					nhayQua = true;
 				}
 			}
 		}
-
+		// Kiểm tra các nước đi hợp lệ, loại bỏ các nước đi làm Tướng bị chiếu
+		loaiBoNuocDiGayChieu(nuocDi, banCo);
 		return nuocDi;
 	}
 }
