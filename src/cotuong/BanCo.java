@@ -126,51 +126,57 @@ public class BanCo {
 
 					if (viTri[i][j].laMauTrang()) {
 						switch (tenQuanCo) {
-						case "QuanTuong":
-							kyTuTrungQuoc = "  帥  ";
-							break;
-						case "Si":
-							kyTuTrungQuoc = "  仕  ";
-							break;
-						case "Tuong":
-							kyTuTrungQuoc = "  相  ";
-							break;
-						case "Ma":
-							kyTuTrungQuoc = "  傌  ";
-							break;
-						case "Xe":
-							kyTuTrungQuoc = "  俥  ";
-							break;
-						case "Phao":
-							kyTuTrungQuoc = "  炮  ";
-							break;
-						case "Tot":
-							kyTuTrungQuoc = "  兵  ";
-							break;
+							case "QuanTuong": // Tướng trắng
+								kyTuTrungQuoc = "帥";
+								break;
+							case "Si": // Sĩ trắng
+								kyTuTrungQuoc = "仕";
+								break;
+							case "Tuong": // Tượng trắng
+								kyTuTrungQuoc = "相";
+								break;
+							case "Ma": // Mã trắng
+								kyTuTrungQuoc = "傌";
+								break;
+							case "Xe": // Xe trắng
+								kyTuTrungQuoc = "俥  ";
+								break;
+							case "Phao": // Pháo trắng
+								kyTuTrungQuoc = "炮 ";
+								break;
+							case "Tot": // Tốt trắng
+								kyTuTrungQuoc = "兵 ";
+								break;
+							default:
+								kyTuTrungQuoc = ". ";
+								break;
 						}
 					} else {
 						switch (tenQuanCo) {
-						case "QuanTuong":
-							kyTuTrungQuoc = "  將  ";
-							break;
-						case "Si":
-							kyTuTrungQuoc = "  士  ";
-							break;
-						case "Tuong":
-							kyTuTrungQuoc = "  象  ";
-							break;
-						case "Ma":
-							kyTuTrungQuoc = "  馬  ";
-							break;
-						case "Xe":
-							kyTuTrungQuoc = "  車  ";
-							break;
-						case "Phao":
-							kyTuTrungQuoc = "  砲  ";
-							break;
-						case "Tot":
-							kyTuTrungQuoc = "  卒  ";
-							break;
+							case "QuanTuong": // Tướng đen
+								kyTuTrungQuoc = "將";
+								break;
+							case "Si": // Sĩ đen
+								kyTuTrungQuoc = "士";
+								break;
+							case "Tuong": // Tượng đen
+								kyTuTrungQuoc = "象";
+								break;
+							case "Ma": // Mã đen
+								kyTuTrungQuoc = "馬";
+								break;
+							case "Xe": // Xe đen
+								kyTuTrungQuoc = "車  ";
+								break;
+							case "Phao": // Pháo đen
+								kyTuTrungQuoc = "砲 ";
+								break;
+							case "Tot": // Tốt đen
+								kyTuTrungQuoc = "卒 ";
+								break;
+							default:
+								kyTuTrungQuoc = ".";
+								break;
 						}
 					}
 				}
@@ -322,6 +328,41 @@ public class BanCo {
 			}
 		}
 		return true; // Bị chiếu bí
+	}
+
+	// Hàm tìm tướng
+	public QuanTuong timQuanTuong(boolean laMauTrang) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 9; j++) {
+				QuanCo quanCo = viTri[i][j];
+				if (quanCo instanceof QuanTuong && quanCo.laMauTrang() == laMauTrang) {
+					return (QuanTuong) quanCo;
+				}
+			}
+		}
+		return null;
+	}
+
+	public boolean seBiChieuSauKhiDiChuyen(QuanCo quanCo, int hangMoi, int cotMoi) {
+		// Lưu vị trí và trạng thái ban đầu
+		int hangCu = quanCo.hang;
+		int cotCu = quanCo.cot;
+		QuanCo quanCoDich = viTri[hangMoi][cotMoi];
+
+		// Thực hiện giả lập nước đi
+		viTri[hangMoi][cotMoi] = quanCo;
+		viTri[hangCu][cotCu] = null;
+		quanCo.capNhatViTri(hangMoi, cotMoi);
+
+		// Kiểm tra nếu tướng bị chiếu
+		boolean biChieu = kiemTraChieuBi(quanCo.laMauTrang());
+
+		// Hoàn tác nước đi
+		viTri[hangCu][cotCu] = quanCo;
+		viTri[hangMoi][cotMoi] = quanCoDich;
+		quanCo.capNhatViTri(hangCu, cotCu);
+
+		return biChieu;
 	}
 
 }

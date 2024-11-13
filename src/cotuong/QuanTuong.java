@@ -27,35 +27,32 @@ public class QuanTuong extends QuanCo {
 			if (banCo.viTriHopLe(hangMoi, cotMoi) && hangMoi >= hangMin && hangMoi <= hangMax && cotMoi >= 3
 					&& cotMoi <= 5) {
 				if (banCo.viTriTrong(hangMoi, cotMoi) || banCo.coQuanDoiThu(hangMoi, cotMoi, laMauTrang)) {
-					nuocDi.add(new int[] { hangMoi, cotMoi });
+					// Giả lập nước đi để kiểm tra nếu nó không bị chiếu
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, hangMoi, cotMoi)) {
+						nuocDi.add(new int[] { hangMoi, cotMoi });
+					}
 				}
 			}
 		}
 
-		// Thêm nước đi cho quân tướng đối thủ nếu nằm trên cùng một cột và không bị
-		// chặn
-		int cotDoiThu = cot; // Cùng cột với quân tướng hiện tại
-		int hangDoiThu = laMauTrang ? 9 : 0; // Vị trí của quân tướng đối thủ
-
-		// Kiểm tra xem có quân tướng đối thủ trên cùng cột không
-		if (banCo.coQuanDoiThu(hangDoiThu, cotDoiThu, laMauTrang)) {
-			boolean biChan = false;
-			int buoc = hang < hangDoiThu ? 1 : -1; // Xác định hướng (lên hay xuống)
-
-			// Kiểm tra xem đường đi đến quân tướng đối thủ có bị chặn không
-			for (int i = hang + buoc; i != hangDoiThu; i += buoc) {
-				if (!banCo.viTriTrong(i, cot)) {
-					biChan = true;
-					break;
-				}
-			}
-
-			// Nếu không bị chặn, thêm quân tướng đối thủ vào nước đi hợp lệ
-			if (!biChan) {
-				nuocDi.add(new int[] { hangDoiThu, cotDoiThu });
-			}
-		}
-		loaiBoNuocDiGayChieu(nuocDi, banCo);
 		return nuocDi;
+	}
+
+	public boolean dangBiChieu(BanCo banCo) {
+		// Duyệt qua tất cả các quân cờ đối thủ để xem có quân nào có thể ăn tướng không
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 9; j++) {
+				QuanCo quanCo = banCo.layQuanCo(i, j);
+				if (quanCo != null && quanCo.laMauTrang() != this.laMauTrang()) {
+					List<int[]> nuocDi = quanCo.layNuocDiHopLe(banCo);
+					for (int[] nuoc : nuocDi) {
+						if (nuoc[0] == this.hang && nuoc[1] == this.cot) {
+							return true; // Tướng đang bị chiếu
+						}
+					}
+				}
+			}
+		}
+		return false; // Tướng không bị chiếu
 	}
 }

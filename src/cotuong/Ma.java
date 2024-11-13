@@ -25,7 +25,10 @@ public class Ma extends QuanCo {
 			// Kiểm tra nước đi hợp lệ và không bị cản
 			if (banCo.viTriHopLe(hangMoi, cotMoi) && banCo.viTriTrong(hang + huong[0] / 2, cot + huong[1] / 2)) {
 				if (banCo.viTriTrong(hangMoi, cotMoi) || banCo.coQuanDoiThu(hangMoi, cotMoi, laMauTrang)) {
-					nuocDi.add(new int[] { hangMoi, cotMoi });
+					// Thêm kiểm tra seBiChieuSauKhiDiChuyen
+					if (!banCo.seBiChieuSauKhiDiChuyen(this, hangMoi, cotMoi)) {
+						nuocDi.add(new int[] { hangMoi, cotMoi });
+					}
 				}
 			}
 		}
