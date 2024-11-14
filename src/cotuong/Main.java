@@ -17,6 +17,9 @@ public class Main {
 			System.out.println("\nLượt của người chơi " + colorPieces);
 
 			board.printBoard();
+			if (board.isCheckmate(white)) {
+				System.out.println("\nĐang bị chiếu\n");
+			}
 			System.out.print("Nhập hàng và cột của quân cờ muốn chọn (ví dụ: 0 0 (xe trắng)): ");
 			int selectRow = scanner.nextInt();
 			int selectCol = scanner.nextInt();
@@ -64,6 +67,7 @@ public class Main {
 			}
 
 			board.printHistory();
+
 			String result = board.checkEnd();
 			if (!result.equals("Chưa kết thúc!")) {
 				result = white ? "Đen thắng!" : "Trắng thắng!";

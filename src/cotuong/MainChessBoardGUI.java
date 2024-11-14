@@ -178,6 +178,10 @@ public class MainChessBoardGUI extends JFrame {
 				removeMove();
 				capNhatBanCo(board);
 				board.printHistory();
+			} else {
+				JOptionPane.showMessageDialog(this,
+						"Vị trí quân " + selectChessPieces.getClass().getSimpleName() + " cần đến không hợp lệ.",
+						"Nước đi không hợp lệ", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		// Nếu chưa chọn quân cờ nào và chọn quân đúng màu
