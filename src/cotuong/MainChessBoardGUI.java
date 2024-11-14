@@ -48,7 +48,7 @@ public class MainChessBoardGUI extends JFrame {
 			}
 		};
 		boardPanel.setLayout(new GridLayout(10, 9));
-
+		System.out.print("chọn một quân cờ (ví dụ: 0 0 (xe trắng)): ");
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 9; j++) {
 				JButton btn = createRoundButton(); // Đổi chỗ tạo nút theo cách mới
@@ -56,12 +56,28 @@ public class MainChessBoardGUI extends JFrame {
 				btn.setBackground(Color.WHITE);
 				btn.setOpaque(false);
 
-				int hang = i;
-				int cot = j;
+				int row = i;
+				int col = j;
 				btn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						handleButtonClick(hang, cot);
+						ChessPieces selectPieces = board.getChessPieces(row, col);
+						if (selectPieces != null) {
+							if (selectPieces.isWhite == white) {
+								List<int[]> moveTrue = selectPieces.getMoveTrue(board);
+								if (moveTrue.isEmpty()) {
+									System.out.println("Quân " + selectPieces.getClass().getSimpleName()
+											+ " không có nước đi hợp lệ.");
+								}
+
+								System.out.println("Các vị trí có thể đi:");
+								for (int[] nuocDi : moveTrue) {
+									System.out.print("(" + nuocDi[0] + "," + nuocDi[1] + ") ");
+								}
+								System.out.println();
+							}
+						}
+						handleButtonClick(row, col);
 					}
 				});
 
@@ -140,8 +156,8 @@ public class MainChessBoardGUI extends JFrame {
 		return button;
 	}
 
-	private void handleButtonClick(int hang, int cot) {
-		ChessPieces chessPieces = board.getChessPieces(hang, cot);
+	private void handleButtonClick(int row, int col) {
+		ChessPieces chessPieces = board.getChessPieces(row, col);
 
 		// Nếu đã chọn một quân cờ
 		if (selectChessPieces != null) {
@@ -151,11 +167,12 @@ public class MainChessBoardGUI extends JFrame {
 				removeMove();
 				List<int[]> nuocDiHopLe = chessPieces.getMoveTrue(board);
 				danhDauNuocDiHopLe(nuocDiHopLe); // Đánh dấu nước đi hợp lệ mới
+
 			}
 			// Nếu chọn ô hợp lệ để di chuyển
-			else if (selectChessPieces.getMoveTrue(board).stream()
-					.anyMatch(nuoc -> nuoc[0] == hang && nuoc[1] == cot)) {
-				board.moveChessPieces(selectChessPieces.getRow(), selectChessPieces.getCol(), hang, cot);
+			else if (selectChessPieces.getMoveTrue(board).stream().anyMatch(nuoc -> nuoc[0] == row && nuoc[1] == col)) {
+
+				board.moveChessPieces(selectChessPieces.getRow(), selectChessPieces.getCol(), row, col);
 				white = !white; // Chuyển lượt chơi
 				selectChessPieces = null; // Hủy chọn quân cờ sau khi di chuyển
 				removeMove();
